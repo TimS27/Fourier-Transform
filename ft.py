@@ -47,12 +47,12 @@ def get_fwhm(t, envelope):
   except ValueError:
     return np.nan
 
-fwhm = get_fwhm(t, intensity_envelope) * 1e15
+fwhm = get_fwhm(t, data_transformed) * 1e15
 
 print("FWHM: " + str(fwhm) + " fs")
 
 plt.figure()
-plt.plot(t, intensity_envelope, '+')
+plt.plot(t, data_transformed**2, '+')
 plt.show()
 
 
