@@ -17,15 +17,35 @@ counts = np.array(data['counts'].tolist())
 frequencies = scipy.constants.c / (wavelengths * 1e-9)
 # intensity to field
 field = np.sqrt(counts)
- 
-nu_span = frequencies[0] - frequencies[len(frequencies)-1]
-max_nuspacing = np.abs(np.diff(frequencies).max())
+
+frequencies_reversed = frequencies[::-1]
+field_reversed = field[::-1]
+
+nu_span =  frequencies_reversed[len(frequencies_reversed)-1] - frequencies_reversed[0]
+max_nuspacing = np.abs(np.diff(frequencies_reversed).max())
+#print(nu_span)
+#print(nu_span/max_nuspacing)
+
+#nu_span = frequencies[0] - frequencies[len(frequencies)-1]
+#max_nuspacing = np.abs(np.diff(frequencies).max())
 
 n_points, nu_spacing = fourioso.n_spacing(max_nuspacing, nu_span) # automatically chooses efficient n_points
 nu = fourioso.get_axis(n_points, nu_spacing)
+#print(nu/1e12)
+#print(frequencies)
+
+# Test if arrax x is monotonic and can therefore be interpolated with np.interp
+def monotonic(x):
+    dx = np.diff(x)
+    return np.all(dx <= 0) or np.all(dx >= 0)
+
+#print(monotonic(frequencies_reversed))
 
 # Interpolate spectral data to new frequency axis
-spectrum_interpolated = np.interp(nu, frequencies, field)
+spectrum_interpolated = np.interp(nu, frequencies_reversed, field_reversed)
+#print(frequencies_reversed)
+print(type(field_reversed[1]))
+print(spectrum_interpolated[500])
 
 t, data_transformed = fourioso.itransform(nu, spectrum_interpolated)
 # you can also separate this:
@@ -49,11 +69,11 @@ def get_fwhm(t, envelope):
 
 fwhm = get_fwhm(t, data_transformed) * 1e15
 
-print("FWHM: " + str(fwhm) + " fs")
+#print("FWHM: " + str(fwhm) + " fs")
 
 plt.figure()
-plt.plot(t, data_transformed**2, '+')
-plt.show()
+plt.plot(t, data_transformed, '+')
+#plt.show()
 
 
 
