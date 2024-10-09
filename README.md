@@ -10,5 +10,4 @@ and considers:
 The code in ft.py reads a .csv file that contains spectral counts in the first row and wavelengths in the second row. It then calculates the Fourier transform with the considerations above.
 Finally the spectrum, electric field, and intensity are plotted and the FWHM of the electric field/intensity is given.
 <br>
-![spectrum_electric-field_intensity](https://github.com/user-attachments/assets/52b49b13-0914-4fe8-a967-bbed30fe3d1a)
-
+![spectrum_electric-field_intensity](spectrum_electric-field_intensity.png)
