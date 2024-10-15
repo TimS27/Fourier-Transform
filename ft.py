@@ -13,7 +13,7 @@ data = pd.read_csv("Spectrum-5mm-Fused-Silica.csv")
 wavelengths = np.array(data['wavelength'].tolist())
 counts = np.array(data['counts'].tolist())
 
-# Covert wavelengths to frequencies
+# Convert wavelengths to frequencies
 frequencies = scipy.constants.c / (wavelengths* 1e-9)
 # Intensity to field
 field = np.sqrt(counts)
