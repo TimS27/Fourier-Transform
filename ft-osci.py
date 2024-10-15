@@ -5,11 +5,23 @@ import fourioso
 import scipy.constants
 
 # Reading CSV file
-data = pd.read_csv("photodiode-on-blocked-1MS-500MSs-200microseconds-1mV.csv")
+data_photodiode = pd.read_csv("photodiode-on-blocked-1MS-500MSs-200microseconds-1mV.csv")   # Osci noise when photodiode is connected
+data_nothing = pd.read_csv("nothing-connected-1MS-500MSs-200microseconds-1mV.csv")  # Osci noise when nothing is connected
  
 # Converting column data to list then array
-t = np.array(data['time'].tolist())
-voltage = np.array(data['voltage'].tolist())
+#t = np.array(data['time'].tolist())
+#voltage = np.array(data['voltage'].tolist())
+
+# Get smaller sample dataset by taking only every 10th entry of the array via [0::10]
+t = np.array(data_photodiode['time'].tolist())
+voltage = np.array(data_photodiode['voltage'].tolist())
+
+# Time difference between neigboring data points, e.g. inverse sampling rate
+#delta_t = t[1]-t[0]
+#print(delta_t)
+# Measurement duration
+#duration = t[len(t) - 1] - t[0]
+#print(duration)
 
 t_span =  t[len(t) - 1] - t[0]
 max_tspacing = np.abs(np.diff(t).max())
@@ -26,15 +38,17 @@ voltage_interpolated = np.interp(t_interpolatable, t, voltage)
 nu, data_transformed = fourioso.transform(t_new, voltage_interpolated)
 #t_fs = t * 1e15 # calculate time axis in fs
 
-data_backtransformed = fourioso.itransform(nu, data_transformed, return_axis=False)
-
+#data_backtransformed = fourioso.itransform(nu, data_transformed, return_axis=False)
 #print(data_transformed)
 
+# simple fft for comparison
+#simple_fft = np.fft.fft(voltage)
+#simple_nu = np.fft.fftfreq(t.shape[-1])
 
 plt.figure()
-plt.plot(nu, data_transformed, '-o', markersize=2)
+plt.plot(t, voltage, '-o', markersize=2)
 #plt.xlim(-1e-12, 1e-12)
-plt.title('Time domain electric field')
-plt.xlabel('Time [s]')
-plt.ylabel('Electric field')
+plt.title('Spectrum')
+plt.xlabel('Frequency [Hz]')
+plt.ylabel('Power')
 plt.show()
