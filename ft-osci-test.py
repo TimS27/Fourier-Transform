@@ -46,7 +46,7 @@ nu, data_transformed = fourioso.transform(t_new, voltage_interpolated)
 #simple_nu = np.fft.fftfreq(t.shape[-1])
 
 plt.figure()
-plt.plot(t, voltage, '-o', markersize=2)
+plt.plot(nu, data_transformed, '-o', markersize=2)
 #plt.xlim(-1e-12, 1e-12)
 plt.title('Spectrum')
 plt.xlabel('Frequency [Hz]')
