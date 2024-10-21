@@ -5,8 +5,8 @@ import fourioso
 import scipy.constants
 
 # Reading CSV file
-data_photodiode = pd.read_csv("photodiode-on-blocked-1MS-500MSs-200microseconds-1mV.csv")   # Osci noise when photodiode is connected
-data_nothing = pd.read_csv("nothing-connected-1MS-500MSs-200microseconds-1mV.csv")  # Osci noise when nothing is connected
+data_photodiode = pd.read_csv("data/photodiode-on-blocked-1MS-2500MSs-20microseconds-1mV.csv")   # Osci noise when photodiode is connected
+data_nothing = pd.read_csv("data/nothing-connected-1MS-2500MSs-200microseconds-1mV.csv")  # Osci noise when nothing is connected
  
 # Converting column data to list then array
 #t = np.array(data['time'].tolist())
